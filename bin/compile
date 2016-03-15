@@ -4,10 +4,12 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-if [ -f $ENV_DIR/PROC_NAME ]; then
-  PROC_NAME=`cat $ENV_DIR/PROC_NAME`
-  mv $BUILD_DIR/deploy/Procfile.$PROC_NAME $BUILD_DIR/Procfile
-  echo "-----> Using Procfile.$PROC_NAME as Procfile"
+if [ -f $ENV_DIR/TASKS ]; then
+  IFS=',';
+  for task in `cat $ENV_DIR/TASKS`; do
+    (cat "$BUILD_DIR/deploy/Procfile.$task" | tr -d "\n"; echo) >> "$BUILD_DIR/Procfile"
+    echo "-----> Appending $task to Procfile"
+  done
 else
-  echo "-----> PROC_NAME not set in environment, doing nothing."
+  echo "-----> TASKS not set in environment, doing nothing."
 fi
