@@ -3,13 +3,12 @@ heroku-selectable-procfile
 
 ## Usage
 
-It's very simple.  This buildpack just moves the Procfile located at `$PROCFILE_PATH` to ./Procfile.  Use with [heroku-buildpack-multi](https://github.com/ddollar/heroku-buildpack-multi) to customize which Procfile Heroku runs.
+This buildpack picks the Procfile corresponding to the process specified by the 
+environment variable `$PROC_NAME` and sets it as the main Procfile of the app.
 
+For example, if we want the file `debug/Procfile.metrics` as the main Procfile 
+of the app, we run
 ```
-$ heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
-$ heroku config:add PROCFILE_PATH=deployment/heroku/Procfile.heroku
-
-$ cat .buildpacks
-https://github.com/cantino/heroku-selectable-procfile.git
-https://github.com/heroku/heroku-buildpack-ruby.git
+$ heroku config:add PROC_NAME=metrics
 ```
+and the buildpack will take care of the rest.

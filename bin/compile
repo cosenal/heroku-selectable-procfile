@@ -4,10 +4,10 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-if [ -f $ENV_DIR/PROCFILE_PATH ]; then
-  PROCFILE_PATH=`cat $ENV_DIR/PROCFILE_PATH`
-  mv $BUILD_DIR/$PROCFILE_PATH $BUILD_DIR/Procfile
-  echo "-----> Using $PROCFILE_PATH as Procfile"
+if [ -f $ENV_DIR/PROC_NAME ]; then
+  PROC_NAME=`cat $ENV_DIR/PROC_NAME`
+  mv $BUILD_DIR/deploy/Procfile.$PROC_NAME $BUILD_DIR/Procfile
+  echo "-----> Using Procfile.$PROC_NAME as Procfile"
 else
-  echo "-----> PROCFILE_PATH not set in environment, doing nothing."
+  echo "-----> PROC_NAME not set in environment, doing nothing."
 fi
