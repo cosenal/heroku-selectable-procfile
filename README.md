@@ -3,12 +3,12 @@ heroku-selectable-procfile
 
 ## Usage
 
-This buildpack picks the Procfile corresponding to the process specified by the 
-environment variable `$PROC_NAME` and sets it as the main Procfile of the app.
+For this buildpack to work, the env variable `TASKS` needs to be set. The buildpack picks all the Procfiles corresponding to the tasks specified by `$TASKS` and combine them in a single Procfile.
 
-For example, if we want the file `debug/Procfile.metrics` as the main Procfile 
-of the app, we run
+For example, if we want the app to run all the processes specified in `debug/Procfile.metrics` and `debug/Procfile.queries`, 
+we add the variable to the environment,
+
 ```
-$ heroku config:add PROC_NAME=metrics
+$ heroku config:add TASKS=metrics,queries
 ```
-and the buildpack will take care of the rest.
+and the buildpack will do the rest.
